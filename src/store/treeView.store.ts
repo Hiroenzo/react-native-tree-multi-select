@@ -15,6 +15,14 @@ export type TreeViewState = {
     expanded: Set<string>;
     updateExpanded: (expanded: Set<string>) => void;
 
+    // Store auto select parent nodes
+    autoSelectParents: boolean;
+    updateAutoSelectParents: (autoSelectParents: boolean) => void;
+
+    // Store auto select child nodes
+    autoSelectChildren: boolean;
+    updateAutoSelectChildren: (autoSelectChildren: boolean) => void;
+
     // Store initial tree view data exactly as passed by the consumer
     initialTreeViewData: TreeNode[];
     updateInitialTreeViewData: (initialTreeViewData: TreeNode[]) => void;
@@ -53,6 +61,12 @@ export const useTreeViewStore = create<TreeViewState>((set) => ({
     expanded: new Set<string>(),
     updateExpanded: (expanded: Set<string>) => set({ expanded }),
 
+    autoSelectParents: true,
+    updateAutoSelectParents: (autoSelectParents: boolean) => set({ autoSelectParents }),
+
+    autoSelectChildren: true,
+    updateAutoSelectChildren: (autoSelectChildren: boolean) => set({ autoSelectChildren }),
+
     initialTreeViewData: [],
     updateInitialTreeViewData: (initialTreeViewData: TreeNode[]) => set({
         initialTreeViewData
@@ -78,6 +92,8 @@ export const useTreeViewStore = create<TreeViewState>((set) => ({
             checked: new Set(),
             indeterminate: new Set(),
             expanded: new Set<string>(),
+            autoSelectParents: true,
+            autoSelectChildren: true,
             initialTreeViewData: [],
             nodeMap: new Map<string, TreeNode>(),
             childToParentMap: new Map<string, string>(),

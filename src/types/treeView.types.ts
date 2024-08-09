@@ -49,6 +49,9 @@ export interface TreeItemCustomizations {
 
     indentationMultiplier?: number;
 
+    autoSelectParents?: boolean;
+    autoSelectChildren?: boolean;
+
     CheckboxComponent?: React.ComponentType<CheckBoxViewProps>;
     ExpandCollapseIconComponent?: React.ComponentType<ExpandIconProps>;
     ExpandCollapseTouchableComponent?: React.ComponentType<TouchableOpacityProps>;
