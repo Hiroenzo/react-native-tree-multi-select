@@ -1,10 +1,11 @@
 import { useTreeViewStore } from "../store/treeView.store";
+import { TreeNode } from 'react-native-tree-multi-select';
 
 /**
  * Function to toggle checkbox state for a tree structure.
  * It sets the checked and indeterminate state for all affected nodes in the tree after an action to check/uncheck is made.
  * @param {string[]} ids - The ids of nodes that need to be checked or unchecked.
- * @param {boolean} [forceCheck] - Optional. If provided, will force the check state of the nodes to be this value. 
+ * @param {boolean} [forceCheck] - Optional. If provided, will force the check state of the nodes to be this value.
  * If not provided, the check state will be toggled based on the current state.
  */
 export function toggleCheckboxes(ids: string[], forceCheck?: boolean) {
@@ -14,6 +15,9 @@ export function toggleCheckboxes(ids: string[], forceCheck?: boolean) {
 
         indeterminate,
         updateIndeterminate,
+
+        autoSelectParents,
+        autoSelectChildren,
 
         nodeMap,
         childToParentMap
@@ -41,12 +45,14 @@ export function toggleCheckboxes(ids: string[], forceCheck?: boolean) {
             tempChecked.delete(nodeId);
         }
 
-        // Get the node from the node map and recursively apply the same state to all its children.
-        const node = nodeMap.get(nodeId);
-        node?.children?.forEach((childNode) => {
-            if (isChecked) tempIndeterminate.delete(childNode.id);
-            toggleNodeAndChildren(childNode.id, isChecked);
-        });
+        if (autoSelectChildren) {
+            // Get the node from the node map and recursively apply the same state to all its children.
+            const node = nodeMap.get(nodeId);
+            node?.children?.forEach((childNode: TreeNode) => {
+              if (isChecked) tempIndeterminate.delete(childNode.id);
+              toggleNodeAndChildren(childNode.id, isChecked);
+            });
+        }
     };
 
     /**
@@ -114,34 +120,36 @@ export function toggleCheckboxes(ids: string[], forceCheck?: boolean) {
     const updateNodeAndAncestorsState = (nodeId: string) => {
         const node = nodeMap.get(nodeId);
 
-        // Update the node's state based on the state of its descendants.
-        if (areAllDescendantsChecked(nodeId)) {
-            tempChecked.add(nodeId);
-            tempIndeterminate.delete(nodeId);
-        } else if (areAnyDescendantsChecked(nodeId)) {
-            // Condition to check if all direct children and all descendants are checked.
-
-            /* 
-                istanbul ignore next
-             
-                NOTE: Below 2 lines in the condition are not covered in unit test
-                This condition will only be true if for some reason areAllDescendantsChecked(nodeId) 
-                is false, while node?.children && node.children.every(childNode => areAllDescendantsChecked(childNode.id)) 
-                is true. Given the current logic of areAllDescendantsChecked, 
-                this scenario is very unlikely to occur.
-             */
-            if (node?.children && node.children.every(childNode => areAllDescendantsChecked(childNode.id))) {
-                // If a node's all direct children and all descendants are checked,
-                // remove this node from both checked and indeterminate sets.
-                tempChecked.delete(nodeId);
+        if (autoSelectParents) {
+            // Update the node's state based on the state of its descendants.
+            if (areAllDescendantsChecked(nodeId)) {
+                tempChecked.add(nodeId);
                 tempIndeterminate.delete(nodeId);
+            } else if (areAnyDescendantsChecked(nodeId)) {
+                // Condition to check if all direct children and all descendants are checked.
+
+                /*
+                    istanbul ignore next
+
+                    NOTE: Below 2 lines in the condition are not covered in unit test
+                    This condition will only be true if for some reason areAllDescendantsChecked(nodeId)
+                    is false, while node?.children && node.children.every(childNode => areAllDescendantsChecked(childNode.id))
+                    is true. Given the current logic of areAllDescendantsChecked,
+                    this scenario is very unlikely to occur.
+                 */
+                if (node?.children && node.children.every((childNode: TreeNode) => areAllDescendantsChecked(childNode.id))) {
+                    // If a node's all direct children and all descendants are checked,
+                    // remove this node from both checked and indeterminate sets.
+                    tempChecked.delete(nodeId);
+                    tempIndeterminate.delete(nodeId);
+                } else {
+                    tempChecked.delete(nodeId);
+                    tempIndeterminate.add(nodeId);
+                }
             } else {
                 tempChecked.delete(nodeId);
-                tempIndeterminate.add(nodeId);
+                tempIndeterminate.delete(nodeId);
             }
-        } else {
-            tempChecked.delete(nodeId);
-            tempIndeterminate.delete(nodeId);
         }
     };
 

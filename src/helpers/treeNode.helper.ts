@@ -6,11 +6,10 @@ import {
 /**
  * Initialize the maps for tracking tree nodes and their parent-child relationships.
  *
- * This function is intended to be called once, during component initialization, 
+ * This function is intended to be called once, during component initialization,
  * with the initial tree data and any preselected node IDs.
  *
  * @param initialData - An array of TreeNode objects that represent the initial tree structure.
- * @param preselectedIds - An optional array of TreeNode IDs that should be preselected.
  */
 export function initializeNodeMaps(initialData: TreeNode[]) {
     const {

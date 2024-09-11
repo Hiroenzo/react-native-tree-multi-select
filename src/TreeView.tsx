@@ -30,6 +30,9 @@ const _TreeView = React.forwardRef<TreeViewRef, TreeViewProps>(
       onCheck,
       onExpand,
 
+      autoSelectParents = true,
+      autoSelectChildren = true,
+
       preselectedIds = [],
 
       preExpandedIds = [],
@@ -103,6 +106,8 @@ const _TreeView = React.forwardRef<TreeViewRef, TreeViewProps>(
     const prevSearchText = usePreviousState(searchText);
 
     React.useEffect(() => {
+      useTreeViewStore.setState({autoSelectParents, autoSelectChildren})
+
       updateInitialTreeViewData(data);
 
       initializeNodeMaps(data);
@@ -153,7 +158,7 @@ const _TreeView = React.forwardRef<TreeViewRef, TreeViewProps>(
         });
       }
       else if (prevSearchText && prevSearchText !== "") {
-        /* Collapse all nodes only if previous search query was non-empty: this is 
+        /* Collapse all nodes only if previous search query was non-empty: this is
         done to prevent node collapse on first render if preExpandedIds is provided */
         InteractionManager.runAfterInteractions(() => {
           updateExpanded(new Set());
