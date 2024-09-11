@@ -1,4 +1,4 @@
-# react-native-tree-multi-select
+# @hiroenzo/react-native-tree-select
 
 ⚡️Super-fast Tree view with multi-selection capabilities, using checkboxes and search filtering.
 
@@ -15,16 +15,16 @@
 
 ## Installation
 
-Using yarn 
+Using yarn
 
 ```sh
-yarn add react-native-tree-multi-select
+yarn add @hiroenzo/react-native-tree-select
 ```
 
 using npm:
 
 ```sh
-npm install react-native-tree-multi-select
+npm install @hiroenzo/react-native-tree-select
 ```
 
 Dependencies that need to be installed for this library to work:
@@ -42,20 +42,20 @@ import {
   TreeView,
   type TreeNode,
   type TreeViewRef
-} from 'react-native-tree-multi-select';
+} from '@hiroenzo/react-native-tree-select';
 
 // Refer to the Properties table below or the example app for the TreeNode type
 const myData: TreeNode[] = [...];
 
 export function TreeViewUsageExample(){
   const treeViewRef = React.useRef<TreeViewRef | null>(null);
-  
+
   // It's recommended to use debounce for the search function (refer to the example app)
   function triggerSearch(text: string){
     // Pass search text to the tree along with the keys on which search is to be done(optional)
     treeViewRef.current?.setSearchText(text, ["name"]);
   }
-  
+
   // Callback functions for check and expand state changes:
   const handleSelectionChange = (
       _checkedIds: string[],
@@ -88,7 +88,7 @@ export function TreeViewUsageExample(){
   const unselectNodes = (idsToCollapse: string[]) => treeViewRef.current?.unselectNodes?.(
     idsToUnselect
   );
-  
+
   return(
     // ... Remember to keep a fixed height for the parent. Read Flash List docs to know why
     <TreeView
@@ -117,6 +117,8 @@ export function TreeViewUsageExample(){
 | `ExpandCollapseIconComponent`      | `ComponentType<`[ExpandIconProps](#expandiconprops)`>`       | No       | A custom expand/collapse icon component                      |
 | `ExpandCollapseTouchableComponent` | `ComponentType<`[TouchableOpacityProps](https://reactnative.dev/docs/touchableopacity#props)`>` | No       | A custom expand/collapse touchable component                 |
 | `CustomNodeRowComponent`           | `React.ComponentType<`[NodeRowProps](#noderowprops)`>`       | No       | Custom row item component                                    |
+| `autoSelectParents`                | `boolean`                                                                                       | No       | Parents will gets selected when all the children are selected                                       |
+| `autoSelectChildren`               | `boolean`                                                                                       | No       | Children will gets selected when parent is selected                                       |
 
 ℹ️ `data` prop is not stateful! You will need to update the `key` prop to force `TreeView` to re-render.
 
@@ -223,11 +225,11 @@ Type: `boolean` OR `"indeterminate"`
 - [x] Row Item full-customization
 - [ ] Prop to set the maximum checked item limit
 - [ ] Prop to disable certain nodes from getting checked
-- [x] Ref function to programatically expand/collapse a certain node 
+- [x] Ref function to programatically expand/collapse a certain node
 - [x] Ref function to programatically un/check a certain node
 - [ ] Ref function to auto-scroll to a certain node's position
 
-If you do not see what you want in the planned feature list, raise a feature request. 
+If you do not see what you want in the planned feature list, raise a feature request.
 
 ---
 
@@ -243,7 +245,7 @@ MIT
 
 <p align="center" valign="center">
   <a href="https://liberapay.com/FutureJJ/donate">
-    <img src="https://liberapay.com/assets/widgets/donate.svg" alt="LiberPay_Donation_Button" height="50" > 
+    <img src="https://liberapay.com/assets/widgets/donate.svg" alt="LiberPay_Donation_Button" height="50" >
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href=".github/assets/Jairaj_Jangle_Google_Pay_UPI_QR_Code.jpg">
@@ -256,7 +258,7 @@ MIT
 </p>
 
 
-## ❤️ Thanks to 
+## ❤️ Thanks to
 
 - Module built using [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
 - To allow super fast list rendering [@shopify/flash-list](https://github.com/Shopify/flash-list)

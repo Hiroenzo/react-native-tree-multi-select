@@ -1,5 +1,5 @@
 {
-  "name": "react-native-tree-multi-select",
+  "name": "@hiroenzo/react-native-tree-select",
   "version": "1.4.1",
   "description": "Super-fast Tree view with multi-selection capabilities, using checkboxes and search filtering.",
   "main": "lib/commonjs/index",
@@ -66,17 +66,12 @@
     "expo",
     "web"
   ],
-  "repository": "https://github.com/JairajJangle/react-native-tree-multi-select",
-  "author": "Jairaj Jangle <jairaj.jangle@gmail.com> (https://github.com/JairajJangle)",
+  "repository": {
+    "url": "https://github.com/Hiroenzo/react-native-tree-select"
+  },
+  "author": "Hiroenzo <kyriechung@outlook.com> (https://github.com/hiroenzo)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/JairajJangle/react-native-tree-multi-select/issues"
-  },
-  "homepage": "https://github.com/JairajJangle/react-native-tree-multi-select#readme",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
-  },
+  "homepage": "https://github.com/Hiroenzo/react-native-tree-select#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^19.4.1",
     "@evilmartians/lefthook": "^1.7.14",
@@ -205,19 +200,5 @@
   },
   "dependencies": {
     "zustand": "^4.5.5"
-  },
-  "funding": [
-    {
-      "type": "individual",
-      "url": "https://www.paypal.com/paypalme/jairajjangle001/usd"
-    },
-    {
-      "type": "individual",
-      "url": "https://liberapay.com/FutureJJ/donate"
-    },
-    {
-      "type": "individual",
-      "url": "https://ko-fi.com/futurejj"
-    }
-  ]
+  }
 }
