@@ -1,6 +1,6 @@
 {
   "name": "@hiroenzo/react-native-tree-select",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "description": "Super-fast Tree view with multi-selection capabilities, using checkboxes and search filtering.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
